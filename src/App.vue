@@ -1,12 +1,34 @@
 <template>
   <main>
     <TitleText title="ใครงามเลิศในปฐพี" />
+    <VoteCard
+    :disabled="voteDisabled"
+    property="เก่ง"
+    />
   </main>
 </template>
 
 <script lang="ts" setup>
-import TitleText from './components/TitleText.vue';
+import { ref } from 'vue';
+import { auth } from './utils/firebase';
 
+import TitleText from './components/TitleText.vue';
+import VoteCard from './components/VoteCard.vue';
+
+
+const voteDisabled = ref(true)
+
+const init = () => {
+  const user = auth.currentUser
+
+  if (user) {
+    voteDisabled.value = false
+  } else {
+    voteDisabled.value = true
+  }
+}
+
+init()
 </script>
 
 <style lang="scss">
